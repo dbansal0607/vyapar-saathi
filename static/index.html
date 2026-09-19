@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#12284B" />
+<title>Vyapar Saathi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!--
+    IMPORTANT for the wrapped Android app: when this page runs inside
+    Capacitor, it can't call a relative "/api/..." path — set this to your
+    laptop's LAN IP before building the APK. Leave "" for normal browser use.
+  -->
+  <script>window.API_BASE = "";</script>
+
+  <div id="app" class="app-shell">
+
+    <!-- Desktop sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-mark">VS</div>
+        <div>
+          <div class="brand-title">VYAPAR SAATHI</div>
+          <div class="brand-sub">Sharma Garments</div>
+        </div>
+      </div>
+      <nav class="sidebar-nav" id="sidebarNav"></nav>
+      <button class="dev-toggle" id="devToggleDesktop">Developer status</button>
+    </aside>
+
+    <!-- Mobile top bar -->
+    <header class="mobile-header">
+      <button id="hamburgerBtn" class="icon-btn" aria-label="Open menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <span class="mobile-header-title" id="mobileHeaderTitle">Home</span>
+      <div style="width:22px"></div>
+    </header>
+
+    <!-- Mobile drawer -->
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+    <div class="drawer" id="drawer">
+      <div class="sidebar-brand" style="margin-bottom:8px;">
+        <div class="brand-mark">VS</div>
+        <div>
+          <div class="brand-title">VYAPAR SAATHI</div>
+          <div class="brand-sub">Sharma Garments</div>
+        </div>
+      </div>
+      <nav class="sidebar-nav" id="drawerNav"></nav>
+      <button class="dev-toggle" id="devToggleMobile">Developer status</button>
+    </div>
+
+    <!-- Main content -->
+    <main class="main-content">
+
+      <!-- ================= HOME / DASHBOARD ================= -->
+      <section data-page="home" class="page">
+        <div class="page-header">
+          <h1>Good morning, Sharma ji <span aria-hidden="true">👋</span></h1>
+          <p class="page-subtitle">Here's what Saathi found for your business.</p>
+        </div>
+        <div id="homeContent" class="loading-block">Loading your dashboard…</div>
+      </section>
+
+      <!-- ================= SAATHI CHAT ================= -->
+      <section data-page="chat" class="page">
+        <div class="page-header">
+          <h1>Saathi Chat</h1>
+          <p class="page-subtitle">Ask about your business, in your own words.</p>
+        </div>
+        <div class="chat-shell">
+          <div class="chat-messages" id="chatMessages"></div>
+          <div class="suggested-row" id="suggestedRow"></div>
+          <form id="chatForm" class="chat-input-row">
+            <button type="button" id="micBtn" class="mic-btn hidden" title="Ask by voice">🎙</button>
+            <input id="chatInput" type="text" placeholder="Type a question…" autocomplete="off" />
+            <button type="submit" class="send-btn">Send</button>
+          </form>
+          <div class="chat-footer-row">
+            <button type="button" id="clearChatBtn" class="link-btn">Clear conversation</button>
+            <span id="micStatus" class="hidden mic-status">Listening…</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= BUSINESS INSIGHTS ================= -->
+      <section data-page="insights" class="page">
+        <div class="page-header">
+          <h1>Business Insights</h1>
+          <p class="page-subtitle">Everything Saathi currently sees in your data.</p>
+        </div>
+        <div id="insightsContent" class="loading-block">Loading insights…</div>
+      </section>
+
+      <!-- ================= CUSTOMERS ================= -->
+      <section data-page="customers" class="page">
+        <div class="page-header">
+          <h1>Customers</h1>
+          <p class="page-subtitle">High-value customers at risk of lapsing.</p>
+        </div>
+        <div id="customersContent" class="loading-block">Loading customers…</div>
+      </section>
+
+      <!-- ================= CAMPAIGNS ================= -->
+      <section data-page="campaigns" class="page">
+        <div class="page-header">
+          <h1>Campaigns</h1>
+          <p class="page-subtitle">Review, launch, and track merchant campaigns.</p>
+        </div>
+        <div id="campaignsContent" class="loading-block">Loading campaigns…</div>
+      </section>
+
+      <!-- ================= TRANSACTIONS ================= -->
+      <section data-page="transactions" class="page">
+        <div class="page-header">
+          <h1>Transactions</h1>
+          <p class="page-subtitle">Recent transactions from your Paytm data.</p>
+        </div>
+        <div id="transactionsContent" class="loading-block">Loading transactions…</div>
+      </section>
+
+      <!-- ================= DEMAND SIGNALS ================= -->
+      <section data-page="signals" class="page">
+        <div class="page-header">
+          <h1>Demand Signals</h1>
+          <p class="page-subtitle">Category-level demand trends from real transaction data.</p>
+        </div>
+        <div id="signalsContent" class="loading-block">Loading demand signals…</div>
+      </section>
+
+      <!-- ================= SETTINGS ================= -->
+      <section data-page="settings" class="page">
+        <div class="page-header">
+          <h1>Settings</h1>
+          <p class="page-subtitle">Merchant profile and preferences.</p>
+        </div>
+        <div id="settingsContent"></div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Developer status panel (hidden by default) -->
+  <div id="devPanel" class="dev-panel hidden">
+    <div class="dev-panel-header">
+      <span>Developer status</span>
+      <button id="devPanelClose" class="icon-btn">✕</button>
+    </div>
+    <div id="devPanelBody" class="dev-panel-body">Loading…</div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

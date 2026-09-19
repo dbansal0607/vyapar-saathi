@@ -1,0 +1,45 @@
+[
+  {
+    "timestamp": "2026-09-18T02:55:25.491845",
+    "merchant_name": "Sharma Garments",
+    "action_text": "Create a targeted campaign.",
+    "customer_count": 43,
+    "customers": [
+      {
+        "customer_id": "CUST0155",
+        "visit_count_90d": 5,
+        "avg_spend": 325.8,
+        "days_since_last_purchase": 35,
+        "favorite_category": "Ethnic Wear"
+      },
+      {
+        "customer_id": "CUST0158",
+        "visit_count_90d": 3,
+        "avg_spend": 309.0,
+        "days_since_last_purchase": 50,
+        "favorite_category": "Trousers"
+      },
+      {
+        "customer_id": "CUST0150",
+        "visit_count_90d": 3,
+        "avg_spend": 302.14,
+        "days_since_last_purchase": 44,
+        "favorite_category": "Ethnic Wear"
+      },
+      {
+        "customer_id": "CUST0163",
+        "visit_count_90d": 4,
+        "avg_spend": 314.08,
+        "days_since_last_purchase": 57,
+        "favorite_category": "Ethnic Wear"
+      },
+      {
+        "customer_id": "CUST0157",
+        "visit_count_90d": 6,
+        "avg_spend": 316.02,
+        "days_since_last_purchase": 42,
+        "favorite_category": "Ethnic Wear"
+      }
+    ]
+  }
+]

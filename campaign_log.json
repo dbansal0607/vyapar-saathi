@@ -1,0 +1,145 @@
+[
+  {
+    "timestamp": "2026-09-18T18:39:28.464284",
+    "merchant_name": "Sharma Garments",
+    "action_text": "Create a targeted \u20b9299 combo campaign.",
+    "customer_count": 43,
+    "customers": [
+      {
+        "customer_id": "CUST0133",
+        "visit_count_90d": 3,
+        "avg_spend": 310.43,
+        "days_since_last_purchase": 33,
+        "favorite_category": "Kids Wear"
+      },
+      {
+        "customer_id": "CUST0156",
+        "visit_count_90d": 6,
+        "avg_spend": 332.77,
+        "days_since_last_purchase": 35,
+        "favorite_category": "Saree"
+      },
+      {
+        "customer_id": "CUST0159",
+        "visit_count_90d": 4,
+        "avg_spend": 353.44,
+        "days_since_last_purchase": 45,
+        "favorite_category": "Kurta"
+      },
+      {
+        "customer_id": "CUST0135",
+        "visit_count_90d": 5,
+        "avg_spend": 314.25,
+        "days_since_last_purchase": 39,
+        "favorite_category": "Kids Wear"
+      },
+      {
+        "customer_id": "CUST0150",
+        "visit_count_90d": 3,
+        "avg_spend": 302.14,
+        "days_since_last_purchase": 44,
+        "favorite_category": "Ethnic Wear"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-09-19T05:34:52.129682",
+    "merchant_name": "Sharma Garments",
+    "action_text": "Create a targeted ?299 combo campaign.",
+    "customer_count": 43,
+    "customers": [
+      {
+        "customer_id": "CUST0134",
+        "visit_count_90d": 5,
+        "avg_spend": 341.21,
+        "days_since_last_purchase": 53,
+        "favorite_category": "Shirts"
+      },
+      {
+        "customer_id": "CUST0125",
+        "visit_count_90d": 3,
+        "avg_spend": 343.22,
+        "days_since_last_purchase": 54,
+        "favorite_category": "Ethnic Wear"
+      },
+      {
+        "customer_id": "CUST0130",
+        "visit_count_90d": 3,
+        "avg_spend": 352.67,
+        "days_since_last_purchase": 32,
+        "favorite_category": "Ethnic Wear"
+      },
+      {
+        "customer_id": "CUST0145",
+        "visit_count_90d": 4,
+        "avg_spend": 332.56,
+        "days_since_last_purchase": 32,
+        "favorite_category": "Trousers"
+      },
+      {
+        "customer_id": "CUST0126",
+        "visit_count_90d": 6,
+        "avg_spend": 298.9,
+        "days_since_last_purchase": 36,
+        "favorite_category": "Kurta"
+      }
+    ],
+    "n8n_response": {
+      "success": true,
+      "status": "campaign_prepared",
+      "merchant": "Sharma Garments",
+      "campaign": "\u20b9299 Festive Combo",
+      "action": "Target lapsed high-value customers"
+    }
+  },
+  {
+    "timestamp": "2026-09-19T06:02:05.870665",
+    "merchant_name": "Sharma Garments",
+    "action_text": "\u20b95,000 ka discount coupon 10 lapsed customers ko bhejein",
+    "customer_count": 43,
+    "customers": [
+      {
+        "customer_id": "CUST0134",
+        "visit_count_90d": 5,
+        "avg_spend": 341.21,
+        "days_since_last_purchase": 53,
+        "favorite_category": "Shirts"
+      },
+      {
+        "customer_id": "CUST0125",
+        "visit_count_90d": 3,
+        "avg_spend": 343.22,
+        "days_since_last_purchase": 54,
+        "favorite_category": "Ethnic Wear"
+      },
+      {
+        "customer_id": "CUST0130",
+        "visit_count_90d": 3,
+        "avg_spend": 352.67,
+        "days_since_last_purchase": 32,
+        "favorite_category": "Ethnic Wear"
+      },
+      {
+        "customer_id": "CUST0145",
+        "visit_count_90d": 4,
+        "avg_spend": 332.56,
+        "days_since_last_purchase": 32,
+        "favorite_category": "Trousers"
+      },
+      {
+        "customer_id": "CUST0126",
+        "visit_count_90d": 6,
+        "avg_spend": 298.9,
+        "days_since_last_purchase": 36,
+        "favorite_category": "Kurta"
+      }
+    ],
+    "n8n_response": {
+      "success": true,
+      "status": "campaign_prepared",
+      "merchant": "Sharma Garments",
+      "campaign": "\u20b9299 Festive Combo",
+      "action": "Target lapsed high-value customers"
+    }
+  }
+]
