@@ -1,123 +1,126 @@
-# Vyapar Saathi — Full Application
+# Vyapar Saathi — AI Growth Partner for Paytm Merchants
 
-## 1. Files changed in this rebuild
+Vyapar Saathi is a closed-loop AI growth agent for small Indian merchants,
+built for the Paytm Build for India AI Hackathon (Merchant Growth AI track).
 
-**New:**
-- `static/app.js` — all frontend logic (router, 8 pages, chat, dev panel)
-- `static/styles.css` — full design system (previously inline in one HTML file)
+**Core loop:** Detect → Understand → Decide → Act → Measure → Learn.
 
-**Rewritten:**
-- `static/index.html` — now an app shell with 8 real pages instead of one
-  static dashboard card
+Most merchant tools stop at showing a dashboard. Vyapar Saathi goes further:
+it detects a real business signal, explains it in the merchant's own
+language, recommends one concrete action, and — with the merchant's
+approval — actually executes it through automation, then remembers the
+outcome to improve future recommendations.
 
-**Backend, extended (not replaced):**
-- `detection.py` — added `get_lapsed_customers()`, `get_daily_revenue_series()`,
-  `get_category_signals()`, `get_transactions()`. Existing functions
-  (`run_detection`, `get_lapsed_customer_sample`) untouched.
-- `llm.py` — added `answer_question()` for real chat. Existing `get_insight()`
-  untouched.
-- `main.py` — added `/api/ask`, `/api/transactions`, `/api/customers/lapsed`,
-  `/api/demand-signals`, `/api/trend`, `/api/campaign-log`. Existing
-  `/api/insight`, `/api/launch`, `/api/transcribe`, `/api/speak` untouched.
+Demo merchant: Sharma Garments (a garment retailer). The product itself is
+merchant-agnostic and works for any small retail business processing
+payments through Paytm.
 
-Nothing was rebuilt from scratch. `sarvam.py` and `cognee_memory.py` are
-unchanged.
+## Problem
 
-## 2. What was fixed
+Small merchants generate rich transaction data through every Paytm payment,
+but have no time or tooling to turn that data into action. They know
+something changed, "sales feel slow this week", but not why, who's affected,
+or what to do about it.
 
-- Sidebar items were decorative — now all 8 actually navigate and load real
-  content (`navigateTo()` in `app.js`).
-- Chat was a static precomputed response — now a real chat interface backed
-  by `/api/ask`: the 4 suggested questions map to real detection data, live
-  Groq answers arbitrary questions when configured, and unmatched questions
-  without Groq get an honest "I can't answer that yet" instead of a fake
-  answer.
-- Added loading skeletons, error states with retry buttons, and empty states
-  throughout — no more silent failures.
-- Mobile: sidebar becomes a hamburger drawer below 860px, not a squeezed
-  desktop layout.
+## Solution
 
-## 3. What's fully working (tested from this build environment)
+Vyapar Saathi sits on top of a merchant's transaction data and closes the
+loop from signal to action:
 
-- All 8 pages load and render from real backend data — every new and
-  existing endpoint was hit directly and returned 200 with correct data.
-- Full campaign cycle tested end to end: Dashboard → Campaigns → Approve &
-  Launch → `/api/launch` → campaign history updates and shows the new entry.
-- Chat's 4 suggested questions tested directly against `answer_question()` —
-  each returns the correct, data-driven answer; an unrelated question
-  correctly returns the honest fallback instead of a fabricated one.
-- Fallback mode (no API keys at all) tested — the entire app works this way.
-- HTML structure and JS syntax validated; every dynamically-created element
-  ID was cross-checked against where it's queried.
+1. **Detect** — computes real signals from transaction data: sales trend,
+   average bill value, lapsed high-value customers, category-level demand.
+2. **Understand** — an LLM explains those signals in warm, conversational
+   Hinglish, the way a human business partner would, not a report.
+3. **Decide** — recommends one specific, concrete action (e.g. a targeted
+   win-back campaign), not a wall of options.
+4. **Act** — on merchant approval, triggers an automated workflow (n8n) that
+   executes the action.
+5. **Measure & Learn** — the outcome is stored as merchant memory (Cognee),
+   so future recommendations build on what's already been tried.
 
-## 4. What I could NOT test from here (no browser in this sandbox)
+## Features
 
-- Actually clicking through the UI in a real browser — layout, responsive
-  breakpoints, animations, whether anything visually overlaps.
-- The mic/voice flow end to end (needs a real browser mic + a real Sarvam key).
-- Live Groq/Sarvam/Cognee calls (network blocked from this sandbox, same as
-  before).
+- **Merchant dashboard** — real-time sales, average bill, transaction
+  volume, and top category, computed fresh from transaction data.
+- **Saathi Chat** — a conversational interface where merchants ask business
+  questions in their own words and get answers grounded in their actual
+  data, not generic advice.
+- **Customer intelligence** — identifies high-value customers at risk of
+  churn, with the specific signals behind each (visit history, spend,
+  category preference).
+- **Campaign automation** — merchant reviews and approves a recommended
+  campaign; approval triggers a real automated workflow that executes it.
+- **Demand signals** — category-level trend detection, surfacing what's
+  rising or falling in real time.
+- **Tap-to-tag enrichment** — for merchants without integrated
+  product/billing systems, a one-tap prompt after each payment ("kya
+  becha?") captures what was sold, turning a raw payment into a
+  categorized transaction without requiring new hardware or software setup.
+- **Voice support** — merchants can ask questions by voice and hear
+  responses spoken back, designed for the reality that a merchant's hands
+  are often busy at the counter.
+- **Persistent merchant memory** — the system remembers past
+  recommendations and outcomes, so its advice compounds over time instead
+  of repeating itself.
+- **Graceful degradation** — every external integration is independently
+  optional. The application runs fully end to end even if a given service
+  is unavailable, with no broken UI states.
 
-**You need to do the visual QA yourself tonight — see the checklist below.**
+## How AI is used, and why each piece is where it is
 
-## 5. What requires external API keys
+- **LLM (Groq/Llama)** — explains and communicates. It never decides the
+  underlying business numbers; those are computed deterministically from
+  transaction data. This keeps the merchant-facing numbers auditable and
+  trustworthy, while the LLM's role is purely to explain them naturally.
+- **Cognee** — persistent memory of merchant context and past outcomes,
+  enabling recommendations that improve over time rather than resetting
+  with every session.
+- **Sarvam** — Hindi/Hinglish speech-to-text and text-to-speech, built for
+  merchants who need hands-free interaction during active business hours.
+- **n8n** — the execution layer. Once a merchant approves a recommendation,
+  n8n handles the actual automation (e.g. customer outreach), separating
+  "deciding what to do" from "doing it."
 
-Same as before, nothing new: `GROQ_API_KEY`, `N8N_WEBHOOK_URL`,
-`SARVAM_API_KEY`, `COGNEE_API_KEY` in your `.env`. The app works fully with
-zero of them set — it just runs in fallback mode for each one missing.
+## Architecture
 
-## 6. How to run it
+- **Backend:** FastAPI (Python), with a deterministic data-analysis layer
+  (pandas) separate from the LLM layer — business numbers are never
+  generated or altered by a model.
+- **Frontend:** A responsive web application, built to run identically on
+  desktop and mobile browsers, and packaged as an installable Android app.
+- **Data:** Transaction-level data processed on demand — no cached or
+  hardcoded business metrics.
+
+## Running the project
 
 ```bash
 pip install -r requirements.txt
-python3 generate_data.py      # only needed once, or to reset the dataset
+python3 generate_data.py      # generates the demo dataset
 uvicorn main:app --reload --port 8123
 ```
 
-Open http://127.0.0.1:8123
+Then open `http://127.0.0.1:8123`.
 
-## 7. Your testing checklist (do this tonight, in a real browser)
+Add API keys to a `.env` file (see `.env.example`) to enable live LLM,
+voice, memory, and workflow execution. The application is fully functional
+without any of them configured.
 
-Go through every one of these — don't skip any, this is the one thing I
-genuinely could not verify from this sandbox:
+## Future scope
 
-- [ ] **Home** — 4 metric cards show real numbers, sparkline renders, Growth
-      Opportunity + Recommended Action cards show text, "Review & Launch"
-      jumps to Campaigns.
-- [ ] **Saathi** — opens with the demo question already answered. Click all
-      4 suggested chips — each gives a different, relevant answer. Type a
-      random unrelated question — should get the honest "can't answer that"
-      message, not a made-up one. "Clear conversation" empties the chat.
-- [ ] **Business Insights** — 5 sections all show real numbers, links to
-      Customers/Signals pages work.
-- [ ] **Customers** — cards show real customer data, search box filters
-      live, sort dropdown re-orders, "Create Campaign" jumps to Campaigns.
-- [ ] **Campaigns** — review card is pre-filled, message textarea is
-      editable, "Approve & Launch" shows Launching → success, campaign
-      appears in history below.
-- [ ] **Transactions** — table populates, search/category filter/sort all
-      work, no raw CSV dump.
-- [ ] **Demand Signals** — every category shows a trend bar and an
-      up/down/flat badge.
-- [ ] **Settings** — toggles flip on/off and persist after a page refresh.
-- [ ] **Developer status** — click it in the sidebar (or in the mobile
-      drawer) — shows Live/Fallback for each of the 4 integrations.
-- [ ] **Resize your browser** down to phone width (or open dev tools' mobile
-      view) — sidebar should disappear, hamburger menu should appear and
-      open a drawer.
-- [ ] **Kill the backend** (Ctrl+C on uvicorn) and reload a page — you
-      should see an error state with a working "Try again" button, not a
-      blank white screen.
-
-If any box fails, that's exactly what tonight's remaining time is for — fix
-it before you stop working, not tomorrow morning.
-
-## 8. Remaining limitations
-
-- Chat only truly reasons freely when `GROQ_API_KEY` is set — without it,
-  only the 4 suggested-question intents get real answers, anything else is
-  the honest fallback message (by design, not a bug).
-- Customers page shows up to 20 lapsed customers; the n8n workflow itself
-  only receives 5 as a sample — this is intentional and disclosed in the UI.
-- No automated browser tests exist — the checklist above is manual by
-  necessity given this build environment.
+- **Live Sale Assist** — real-time, point-of-sale nudges delivered the
+  moment a transaction is tagged (e.g. suggesting an upsell when a bill is
+  below a category's typical value), rather than insights delivered after
+  the fact.
+- **Direct Paytm transaction integration** — replacing the demo dataset
+  with a live merchant's actual Paytm transaction feed.
+- **Multi-merchant support** — extending beyond a single demo merchant to
+  onboard and serve many merchants concurrently.
+- **Deeper memory-driven personalization** — using accumulated outcome data
+  to automatically tune which recommendations are shown, rather than
+  surfacing the same categories of insight every time.
+- **Expanded automation actions** — beyond campaigns, extending n8n
+  workflows to inventory reordering, supplier communication, and customer
+  service follow-ups.
+- **Native mobile app distribution** — moving from a wrapped web app to a
+  fully native mobile experience for merchants who primarily operate from
+  their phones.
